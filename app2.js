@@ -19,6 +19,7 @@ let totalTTC;
 
 // TODO
 // empêcher le fait d'entrer manuellement des valeurs négatives
+// gérer l'ajout manuelle de lignes de produits
 
 
 

@@ -16,6 +16,7 @@ function addEvent(row) {
     let buttonMoins = row.querySelector('.buttonMoins');
     let quantityInput = row.querySelector('.inputQuantite');
     buttonPlus.onclick = function(){
+        // console.log(row);
         quantityInput.value++;
         let quantity = quantityInput.value;
         calculLigne(row, quantity);
@@ -35,20 +36,31 @@ function addEvent(row) {
 
 
 function calculLigne(row, quantity) {
-    let blockPrixUnitaireTTC = row.querySelector('.prixTTC');
-    let prixUnitaireTTCAvecEuro = blockPrixUnitaireTTC.textContent;
-    let prixUnitaireTTC = prixUnitaireTTCAvecEuro.substring(0, prixUnitaireTTCAvecEuro.indexOf(' '));
-    
-    let blockPrixUnitaireAchat = row.querySelector('.prixAchat');
-    let prixUnitaireAchatAvecEuro = blockPrixUnitaireAchat.textContent;
-    let prixUnitaireAchat = prixUnitaireAchatAvecEuro.substring(0, prixUnitaireTTCAvecEuro.indexOf(' '));
+    let blockPrixUnitaireTTC = row.querySelector('.prixVente');
+    let prixUnitaireTTC;
+    let prixUnitaireAchat;
+
+    if (row.querySelector('.prixVenteManuel')){
+        let inputPrixUnitaireTTC = row.querySelector('.prixVenteManuel');
+        prixUnitaireTTC = inputPrixUnitaireTTC.value;
+
+        let inputPrixUnitaireAchat = row.querySelector('.prixAchatManuel');
+        prixUnitaireAchat = inputPrixUnitaireAchat.value;
+    }else{
+        let prixUnitaireTTCAvecEuro = blockPrixUnitaireTTC.textContent;
+        prixUnitaireTTC = prixUnitaireTTCAvecEuro.substring(0, prixUnitaireTTCAvecEuro.indexOf(' '));
+        
+        let blockPrixUnitaireAchat = row.querySelector('.prixAchat');
+        let prixUnitaireAchatAvecEuro = blockPrixUnitaireAchat.textContent;
+        prixUnitaireAchat = prixUnitaireAchatAvecEuro.substring(0, prixUnitaireTTCAvecEuro.indexOf(' '));
+    }
 
     let totalLigne = quantity * prixUnitaireTTC;
+    let margeLigne = (prixUnitaireTTC - prixUnitaireAchat) * quantity;
     
     let totalLigneContainer = row.querySelector('.totalLigne');
     totalLigneContainer.textContent = totalLigne.toFixed(2);
     
-    let margeLigne = (prixUnitaireTTC - prixUnitaireAchat) * quantity;
     let margeLigneContainer = row.querySelector('.margeLigne');
     margeLigneContainer.textContent = margeLigne.toFixed(2);
     
